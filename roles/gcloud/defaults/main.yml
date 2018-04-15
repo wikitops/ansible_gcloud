@@ -1,0 +1,12 @@
+---
+
+gcloud_repo: "deb https://packages.cloud.google.com/apt cloud-sdk-{{ ansible_lsb.codename }} main"
+gcloud_repo_key: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+
+gcloud:
+  - username: "vagrant"
+    client_email: "GCLOUD_CLIENT_EMAIL"
+    client_id: "GCLOUD_CLIENT_ID"
+    project_id: "GCLOUD_PROJECT_ID"
+    private_key_id: "GCLOUD_PRIVATE_KEY_ID"
+    private_key: "GCLOUD_PRIVATE_KEY"

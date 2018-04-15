@@ -1,0 +1,48 @@
+---
+
+- name: GCLOUD | Add repository
+  apt_repository:
+    repo: "{{ gcloud_repo }}"
+    state: present
+
+- name: GCLOUD | Import key
+  apt_key:
+    url: "{{ gcloud_repo_key }}"
+    state: present
+
+- name: GCLOUD | Installation
+  apt:
+    name: google-cloud-sdk
+    update_cache: yes
+
+- name: GCLOUD | Manage directories
+  become: yes
+  become_user: "{{ item.username }}"
+  file:
+    path: ".gcloud"
+    state: directory
+    mode: 0750
+  with_items: "{{ gcloud }}"
+
+- name: GCLOUD | Configuration
+  become: yes
+  become_user: "{{ item.username }}"
+  template:
+    src: "gcloud/credentials.json.j2"
+    dest: ".gcloud/credentials.json"
+    mode: 0600
+  with_items: "{{ gcloud }}"
+
+- name: GCLOUD | Account activation
+  become: yes
+  become_user: "{{ item.username }}"
+  shell: "gcloud auth activate-service-account {{ item.client_email }} --key-file '.gcloud/credentials.json'"
+  environment:
+    CLOUDSDK_PYTHON_SITEPACKAGES: 1
+  with_items: "{{ gcloud }}"
+
+- name: GCLOUD | Sets default project
+  become: yes
+  become_user: "{{ item.username }}"
+  command: gcloud config set core/project {{ item.project_id }}
+  with_items: "{{ gcloud }}"
