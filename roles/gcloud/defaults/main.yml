@@ -1,8 +1,18 @@
 ---
 
-gcloud_repo: "deb https://packages.cloud.google.com/apt cloud-sdk-{{ ansible_lsb.codename }} main"
+###
+# GCLOUD
+###
+
+# Debian
+gcloud_repo: "deb https://packages.cloud.google.com/apt cloud-sdk-{{ ansible_distribution_release }} main"
 gcloud_repo_key: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
 
+# RedHat
+gcloud_yum_repository: https://packages.cloud.google.com/yum/repos/cloud-sdk-el7-x86_64
+gcloud_yum_key: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
+# Account
 gcloud:
   - username: "vagrant"
     client_email: "GCLOUD_CLIENT_EMAIL"

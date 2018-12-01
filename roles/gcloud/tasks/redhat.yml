@@ -1,0 +1,10 @@
+---
+
+- name: GCLOUD REDHAT | Add repository
+  yum_repository:
+    name: google_cloud_sdk
+    description: Google Cloud Platform SDK
+    baseurl: "{{ gcloud_yum_repository }}"
+    gpgcheck: yes
+    gpgkey: "{{ gcloud_yum_key }}"
+    enabled: yes

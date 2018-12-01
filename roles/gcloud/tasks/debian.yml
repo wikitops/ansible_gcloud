@@ -1,0 +1,12 @@
+---
+
+- name: GCLOUD DEBIAN | Import key
+  apt_key:
+    url: "{{ gcloud_repo_key }}"
+    state: present
+
+- name: GCLOUD DEBIAN | Add repository
+  apt_repository:
+    repo: "{{ gcloud_repo }}"
+    state: present
+    update_cache: yes

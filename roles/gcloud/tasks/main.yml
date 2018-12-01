@@ -1,19 +1,12 @@
 ---
 
-- name: GCLOUD | Add repository
-  apt_repository:
-    repo: "{{ gcloud_repo }}"
-    state: present
-
-- name: GCLOUD | Import key
-  apt_key:
-    url: "{{ gcloud_repo_key }}"
-    state: present
+- name: GCLOUD | Manage Debian environment
+  import_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
 
 - name: GCLOUD | Installation
-  apt:
+  package:
     name: google-cloud-sdk
-    update_cache: yes
 
 - name: GCLOUD | Manage directories
   become: yes
